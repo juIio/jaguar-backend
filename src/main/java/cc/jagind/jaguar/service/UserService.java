@@ -45,6 +45,10 @@ public class UserService {
         return List.copyOf(userList);
     }
 
+    public void deleteAllUsers() {
+        userRepository.deleteAll();
+    }
+
     public User authenticateUser(String email, String password) {
         User user = this.getUserByEmail(email);
 
