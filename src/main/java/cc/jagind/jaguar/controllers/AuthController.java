@@ -2,11 +2,8 @@ package cc.jagind.jaguar.controllers;
 
 import cc.jagind.jaguar.model.User;
 import cc.jagind.jaguar.service.UserService;
+import cc.jagind.jaguar.utils.BankNumberUtil;
 import cc.jagind.jaguar.utils.JwtUtil;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +34,10 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
             }
 
-            // TODO: Send verification email, set them verified when they confirm it
             user.setVerifiedAt(System.currentTimeMillis());
 
-            // TODO: Generate account/routing numbers
-            user.setAccountNumber(990000042);
-            user.setRoutingNumber(987654321);
+            user.setAccountNumber(BankNumberUtil.generateAccountNumber());
+            user.setRoutingNumber(BankNumberUtil.generateRoutingNumber());
 
             // We are a very generous bank
             user.setBalance(25000.50);

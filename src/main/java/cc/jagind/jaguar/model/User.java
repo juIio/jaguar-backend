@@ -16,8 +16,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int accountNumber;
-    private int routingNumber;
+    private String accountNumber;
+    private String routingNumber;
 
     private String firstName;
     private String lastName;
