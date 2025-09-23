@@ -35,20 +35,15 @@ public class AuthController {
             }
 
             user.setVerifiedAt(System.currentTimeMillis());
-
             user.setAccountNumber(BankNumberUtil.generateAccountNumber());
             user.setRoutingNumber(BankNumberUtil.generateRoutingNumber());
-
-            // We are a very generous bank
             user.setBalance(25000.50);
-
             userService.saveUser(user);
-
-            // TODO: Return a UserDto rather than the whole User
 
             response.put("success", true);
             response.put("message", "Registration successful");
-            response.put("user", user);
+            response.put("token", jwtUtil.createTokenFromEmail(user.getEmail()));
+
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             response.put("success", false);
@@ -71,7 +66,6 @@ public class AuthController {
                 response.put("success", true);
                 response.put("message", "Successful login");
                 response.put("token", jwtUtil.createTokenFromEmail(user.getEmail()));
-                response.put("user", user);
 
                 return ResponseEntity.ok(response);
             } else {
