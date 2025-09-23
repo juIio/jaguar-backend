@@ -17,6 +17,8 @@ public class Transaction {
 
     private double amount;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "from_user_id")
     private User fromUser;

@@ -34,4 +34,7 @@ public class User {
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> receivedTransactions;
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }
