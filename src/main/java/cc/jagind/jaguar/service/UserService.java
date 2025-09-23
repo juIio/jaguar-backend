@@ -2,6 +2,7 @@ package cc.jagind.jaguar.service;
 
 import cc.jagind.jaguar.model.User;
 import cc.jagind.jaguar.repository.UserRepository;
+import cc.jagind.jaguar.utils.PasswordUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordUtil passwordUtil;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordUtil passwordUtil) {
         this.userRepository = userRepository;
+        this.passwordUtil = passwordUtil;
     }
 
     public User getUserById(long id) {
@@ -25,6 +28,12 @@ public class UserService {
     }
 
     public void saveUser(User user) {
+        String password = user.getPassword();
+
+        if (password != null && !passwordUtil.isPasswordEncrypted(password)) {
+            user.setPassword(passwordUtil.encryptPassword(password));
+        }
+
         this.userRepository.save(user);
     }
 
@@ -39,8 +48,7 @@ public class UserService {
     public User authenticateUser(String email, String password) {
         User user = this.getUserByEmail(email);
 
-        // TODO: Password encryption
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && passwordUtil.verifyPassword(password, user.getPassword())) {
             return user;
         }
 
