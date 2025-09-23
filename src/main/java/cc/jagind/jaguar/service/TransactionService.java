@@ -43,6 +43,10 @@ public class TransactionService {
         User fromUser = fromUserOpt.get();
         User toUser = toUserOpt.get();
 
+        if (fromUser.getBalance() < amount) {
+            throw new Exception("From user balance is too low");
+        }
+
         Transaction transaction = new Transaction();
         transaction.setFromUser(fromUser);
         transaction.setToUser(toUser);
