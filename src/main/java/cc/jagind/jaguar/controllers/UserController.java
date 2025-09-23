@@ -1,11 +1,14 @@
 package cc.jagind.jaguar.controllers;
 
-import cc.jagind.jaguar.dto.UserDashboardDto;
+import cc.jagind.jaguar.dto.ContactDto;
+import cc.jagind.jaguar.dto.UserDashboardPageDto;
+import cc.jagind.jaguar.dto.UserTransactionsPageDto;
 import cc.jagind.jaguar.model.User;
 import cc.jagind.jaguar.service.UserService;
 import cc.jagind.jaguar.utils.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/dashboard-data")
-    public UserDashboardDto getData(@RequestHeader("Authorization") String authHeader) {
+    public UserDashboardPageDto getDashboardData(@RequestHeader("Authorization") String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new RuntimeException("Missing or invalid Authorization header");
         }
@@ -35,9 +38,32 @@ public class UserController {
         String email = jwtUtil.getUserEmailFromToken(token);
         User user = userService.getUserByEmail(email);
 
-        return new UserDashboardDto(user);
+        if (user == null) {
+            throw new RuntimeException("User not found from auth token");
+        }
+
+        return new UserDashboardPageDto(user);
     }
 
+    @GetMapping("/transactions-data")
+    public UserTransactionsPageDto getTransactionsData(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Missing or invalid Authorization header");
+        }
+
+        String token = authHeader.substring(7);
+        String email = jwtUtil.getUserEmailFromToken(token);
+        User user = userService.getUserByEmail(email);
+
+        if (user == null) {
+            throw new RuntimeException("User not found from auth token");
+        }
+
+        List<ContactDto> recentContacts = new ArrayList<>();
+        user.getRecentContacts().forEach(contact -> recentContacts.add(new ContactDto(contact)));
+
+        return new UserTransactionsPageDto(recentContacts, user.getBalance());
+    }
 
     @PostMapping("/create")
     public void createUser(@RequestBody User user) throws Exception {

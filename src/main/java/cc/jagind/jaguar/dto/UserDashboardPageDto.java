@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDashboardDto {
+public class UserDashboardPageDto {
     private String firstName;
     private String lastName;
     private String accountNumber;
@@ -22,7 +22,7 @@ public class UserDashboardDto {
     private List<TransactionDto> sentTransactions;
     private List<TransactionDto> receivedTransactions;
 
-    public UserDashboardDto(User user) {
+    public UserDashboardPageDto(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.accountNumber = user.getAccountNumber();
