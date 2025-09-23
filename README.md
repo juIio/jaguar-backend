@@ -47,7 +47,7 @@ JAGUAR is a modern banking application that provides users with essential bankin
 
 ### 1. Clone the Repository
 ```bash
-git clone [repository-url]
+git clone https://github.com/juIio/jaguar-backend
 cd jaguar-backend
 ```
 
