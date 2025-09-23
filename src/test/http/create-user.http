@@ -1,0 +1,27 @@
+### Create Julio
+POST http://localhost:8080/api/users/create
+Content-Type: application/json
+
+
+{
+  "username": "juliogalan",
+  "email": "julio@jagind.cc",
+  "password": "password",
+  "balance": 500.50,
+  "verifiedAt": 1695000000000,
+  "transactions": []
+}
+
+### Create Fernando
+POST http://localhost:8080/api/users/create
+Content-Type: application/json
+
+
+{
+  "username": "fernandogalan",
+  "email": "fernando@haloservers.net",
+  "password": "password",
+  "balance": 1000.50,
+  "verifiedAt": 1695000000000,
+  "transactions": []
+}
