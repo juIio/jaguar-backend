@@ -16,13 +16,15 @@ public class ContactDto {
     private long ownerId;
     private long contactUserId;
     private long lastTransactionTimestamp;
-    private String contactUserFullName;
+    private String contactFullName;
+    private String contactEmail;
 
     public ContactDto(Contact contact) {
         this.id = contact.getId();
         this.ownerId = contact.getOwner().getId();
         this.contactUserId = contact.getContactUser().getId();
         this.lastTransactionTimestamp = contact.getLastTransactionTimestamp();
-        this.contactUserFullName = contact.getContactUser().getFullName();
+        this.contactFullName = contact.getContactUser().getFullName();
+        this.contactEmail = contact.getContactUser().getEmail();
     }
 }
