@@ -1,5 +1,6 @@
 package cc.jagind.jaguar.controllers;
 
+import cc.jagind.jaguar.dto.TransactionDto;
 import cc.jagind.jaguar.model.Transaction;
 import cc.jagind.jaguar.service.TransactionService;
 import org.springframework.http.HttpStatus;
@@ -30,11 +31,11 @@ public class TransactionController {
             double amount = ((Number) transactionData.get("amount")).doubleValue();
 
             Transaction transaction = transactionService.createTransaction(fromUserId, toUserId, amount);
-            // TODO: Check if we need to send a TransactionDto (might not be necessary here?)
+            TransactionDto transactionDto = new TransactionDto(transaction);
 
             response.put("success", true);
             response.put("message", "Transaction created successfully");
-            response.put("transaction", transaction);
+            response.put("transaction", transactionDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             response.put("success", false);
