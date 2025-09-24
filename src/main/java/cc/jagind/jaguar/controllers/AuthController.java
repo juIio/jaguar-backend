@@ -43,7 +43,7 @@ public class AuthController {
             transaction.setDescription("Early user deposit");
             transaction.setToUser(user);
             transaction.setAmount(25000.50);
-            user.addTransaction(transaction);
+            user.addReceivedTransaction(transaction);
 
             userService.saveUser(user);
 

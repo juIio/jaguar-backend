@@ -53,6 +53,9 @@ public class TransactionService {
         transaction.setAmount(amount);
         transaction.setTimestamp(System.currentTimeMillis());
 
+        fromUser.addSentTransaction(transaction);
+        toUser.addReceivedTransaction(transaction);
+
         return transactionRepository.save(transaction);
     }
 

@@ -81,10 +81,8 @@ public class UserController {
         return this.userService.getAllUsers();
     }
 
-    /*
     @GetMapping("/delete-all")
     public void deleteAllUsers() {
         this.userService.deleteAllUsers();
     }
-     */
 }

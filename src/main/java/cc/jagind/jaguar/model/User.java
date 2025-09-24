@@ -46,8 +46,13 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    public void addTransaction(Transaction transaction) {
+    public void addReceivedTransaction(Transaction transaction) {
         this.balance += transaction.getAmount();
         this.receivedTransactions.add(transaction);
+    }
+
+    public void addSentTransaction(Transaction transaction) {
+        this.balance -= transaction.getAmount();
+        this.sentTransactions.add(transaction);
     }
 }
