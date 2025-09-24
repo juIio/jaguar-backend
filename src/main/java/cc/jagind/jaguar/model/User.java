@@ -1,5 +1,6 @@
 package cc.jagind.jaguar.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,12 +31,15 @@ public class User {
     private long verifiedAt;
 
     @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("user-sent-transactions")
     private List<Transaction> sentTransactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("user-received-transactions")
     private List<Transaction> receivedTransactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("user-contacts")
     private List<Contact> recentContacts = new ArrayList<>();
 
     public String getFullName() {
