@@ -25,9 +25,15 @@ public class TransactionDto {
         this.timestamp = transaction.getTimestamp();
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
-        this.fromUserId = transaction.getFromUser().getId();
-        this.fromUserName = transaction.getFromUser().getFullName();
         this.toUserId = transaction.getToUser().getId();
         this.toUserName = transaction.getToUser().getFullName();
+
+        if (transaction.getFromUser() == null) {
+            this.fromUserId = -1;
+            this.fromUserName = "JAGUAR FINANCIAL";
+        } else {
+            this.fromUserId = transaction.getFromUser().getId();
+            this.fromUserName = transaction.getFromUser().getFullName();
+        }
     }
 }

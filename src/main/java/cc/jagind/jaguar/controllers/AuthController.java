@@ -1,5 +1,6 @@
 package cc.jagind.jaguar.controllers;
 
+import cc.jagind.jaguar.model.Transaction;
 import cc.jagind.jaguar.model.User;
 import cc.jagind.jaguar.service.UserService;
 import cc.jagind.jaguar.utils.BankNumberUtil;
@@ -37,7 +38,13 @@ public class AuthController {
             user.setVerifiedAt(System.currentTimeMillis());
             user.setAccountNumber(BankNumberUtil.generateAccountNumber());
             user.setRoutingNumber(BankNumberUtil.generateRoutingNumber());
-            user.setBalance(25000.50);
+
+            Transaction transaction = new Transaction();
+            transaction.setDescription("Early user deposit");
+            transaction.setToUser(user);
+            transaction.setAmount(25000.50);
+            user.addTransaction(transaction);
+
             userService.saveUser(user);
 
             response.put("success", true);

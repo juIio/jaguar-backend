@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,15 +30,20 @@ public class User {
     private long verifiedAt;
 
     @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Transaction> sentTransactions;
+    private List<Transaction> sentTransactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Transaction> receivedTransactions;
+    private List<Transaction> receivedTransactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Contact> recentContacts;
+    private List<Contact> recentContacts = new ArrayList<>();
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        this.balance += transaction.getAmount();
+        this.receivedTransactions.add(transaction);
     }
 }

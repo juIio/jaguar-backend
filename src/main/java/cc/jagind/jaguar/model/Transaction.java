@@ -27,4 +27,7 @@ public class Transaction {
     @JoinColumn(name = "to_user_id")
     private User toUser;
 
+    public Transaction() {
+        this.timestamp = System.currentTimeMillis();
+    }
 }

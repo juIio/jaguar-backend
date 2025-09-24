@@ -80,4 +80,11 @@ public class UserController {
     public List<User> getAllUsers() {
         return this.userService.getAllUsers();
     }
+
+    /*
+    @GetMapping("/delete-all")
+    public void deleteAllUsers() {
+        this.userService.deleteAllUsers();
+    }
+     */
 }
