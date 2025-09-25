@@ -1,6 +1,11 @@
 spring:
+  application:
+    name: "jaguar"
   profiles:
     active: dev
 
 jwt:
   secret: ${JWT_SECRET}
+
+frontend:
+  url: ${FRONTEND_URL}
