@@ -4,6 +4,9 @@ spring:
   profiles:
     active: ${ACTIVE_PROFILE}
 
+server:
+  port: ${SERVER_PORT}
+
 jwt:
   secret: ${JWT_SECRET}
 
