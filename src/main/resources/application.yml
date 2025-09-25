@@ -2,7 +2,7 @@ spring:
   application:
     name: "jaguar"
   profiles:
-    active: dev
+    active: ${ACTIVE_PROFILE}
 
 jwt:
   secret: ${JWT_SECRET}
