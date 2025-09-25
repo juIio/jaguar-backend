@@ -1,30 +1,23 @@
 package cc.jagind.jaguar.dto;
 
 import cc.jagind.jaguar.model.Contact;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class ContactDto {
-
-    private long id;
-    private long ownerId;
-    private long contactUserId;
-    private long lastTransactionTimestamp;
-    private String contactFullName;
-    private String contactEmail;
-
+public record ContactDto(
+        long id,
+        long ownerId,
+        long contactUserId,
+        long lastTransactionTimestamp,
+        String contactFullName,
+        String contactEmail
+) {
     public ContactDto(Contact contact) {
-        this.id = contact.getId();
-        this.ownerId = contact.getOwner().getId();
-        this.contactUserId = contact.getContactUser().getId();
-        this.lastTransactionTimestamp = contact.getLastTransactionTimestamp();
-        this.contactFullName = contact.getContactUser().getFullName();
-        this.contactEmail = contact.getContactUser().getEmail();
+        this(
+                contact.getId(),
+                contact.getOwner().getId(),
+                contact.getContactUser().getId(),
+                contact.getLastTransactionTimestamp(),
+                contact.getContactUser().getFullName(),
+                contact.getContactUser().getEmail()
+        );
     }
 }
