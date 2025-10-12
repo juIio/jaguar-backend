@@ -47,27 +47,9 @@ public class DashboardTransactionController {
         List<TransactionDto> sentDtoList = new ArrayList<>();
         List<Transaction> sentTransactions = transactionService.getTransactionsFromUser(userId);
         for (Transaction transaction : sentTransactions) {
-            String toUserEmail = "";
-            try {
-                UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
-                        .setUserId(transaction.getToUserId())
-                        .build();
-                UserProto.EmailResponse emailResponse = userServiceStub.getEmailByUserId(emailRequest);
-                if (emailResponse.getFound()) {
-                    toUserEmail = emailResponse.getEmail();
-                }
-            } catch (Exception e) {
-                System.err.println("Failed to retrieve email for userId: " + transaction.getToUserId());
-            }
-
-            sentDtoList.add(new TransactionDto(transaction, toUserEmail));
-        }
-
-        // Received transactions
-        List<TransactionDto> receivedDtoList = new ArrayList<>();
-        List<Transaction> receivedTransactions = transactionService.getTransactionsToUser(userId);
-        for (Transaction transaction : receivedTransactions) {
             String fromUserEmail = "";
+            String toUserEmail = "";
+
             try {
                 UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
                         .setUserId(transaction.getFromUserId())
@@ -80,7 +62,53 @@ public class DashboardTransactionController {
                 System.err.println("Failed to retrieve email for userId: " + transaction.getFromUserId());
             }
 
-            receivedDtoList.add(new TransactionDto(transaction, fromUserEmail));
+            try {
+                UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
+                        .setUserId(transaction.getToUserId())
+                        .build();
+                UserProto.EmailResponse emailResponse = userServiceStub.getEmailByUserId(emailRequest);
+                if (emailResponse.getFound()) {
+                    toUserEmail = emailResponse.getEmail();
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to retrieve email for userId: " + transaction.getToUserId());
+            }
+
+            sentDtoList.add(new TransactionDto(transaction, fromUserEmail, toUserEmail));
+        }
+
+        // Received transactions
+        List<TransactionDto> receivedDtoList = new ArrayList<>();
+        List<Transaction> receivedTransactions = transactionService.getTransactionsToUser(userId);
+        for (Transaction transaction : receivedTransactions) {
+            String fromUserEmail = "";
+            String toUserEmail = "";
+
+            try {
+                UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
+                        .setUserId(transaction.getFromUserId())
+                        .build();
+                UserProto.EmailResponse emailResponse = userServiceStub.getEmailByUserId(emailRequest);
+                if (emailResponse.getFound()) {
+                    fromUserEmail = emailResponse.getEmail();
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to retrieve email for userId: " + transaction.getFromUserId());
+            }
+
+            try {
+                UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
+                        .setUserId(transaction.getToUserId())
+                        .build();
+                UserProto.EmailResponse emailResponse = userServiceStub.getEmailByUserId(emailRequest);
+                if (emailResponse.getFound()) {
+                    toUserEmail = emailResponse.getEmail();
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to retrieve email for userId: " + transaction.getToUserId());
+            }
+
+            receivedDtoList.add(new TransactionDto(transaction, fromUserEmail, toUserEmail));
         }
 
         response.put("success", true);

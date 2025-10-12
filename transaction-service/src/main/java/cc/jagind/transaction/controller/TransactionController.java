@@ -59,7 +59,21 @@ public class TransactionController {
             String description = (String) transactionData.get("description");
 
             Transaction transaction = transactionService.createTransaction(fromUserId, recipientUserId, amount, description);
-            TransactionDto transactionDto = new TransactionDto(transaction, (String) transactionData.get("recipientEmail"));
+            
+            String fromUserEmail = "";
+            try {
+                UserProto.UserIdRequest fromEmailRequest = UserProto.UserIdRequest.newBuilder()
+                        .setUserId(fromUserId)
+                        .build();
+                UserProto.EmailResponse fromEmailResponse = userServiceStub.getEmailByUserId(fromEmailRequest);
+                if (fromEmailResponse.getFound()) {
+                    fromUserEmail = fromEmailResponse.getEmail();
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to retrieve email for userId: " + fromUserId);
+            }
+            
+            TransactionDto transactionDto = new TransactionDto(transaction, fromUserEmail, (String) transactionData.get("recipientEmail"));
 
             response.put("success", true);
             response.put("message", "Transaction created successfully");
