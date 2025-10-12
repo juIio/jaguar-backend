@@ -3,6 +3,7 @@ package cc.jagind.transaction.controller;
 import cc.jagind.commons.utils.JwtUtil;
 import cc.jagind.grpc.UserProto;
 import cc.jagind.grpc.UserServiceGrpc;
+import cc.jagind.grpc.util.GrpcUtil;
 import cc.jagind.transaction.dto.TransactionDto;
 import cc.jagind.transaction.model.Transaction;
 import cc.jagind.transaction.service.TransactionService;
@@ -62,13 +63,7 @@ public class TransactionController {
             
             String fromUserEmail = "";
             try {
-                UserProto.UserIdRequest fromEmailRequest = UserProto.UserIdRequest.newBuilder()
-                        .setUserId(fromUserId)
-                        .build();
-                UserProto.EmailResponse fromEmailResponse = userServiceStub.getEmailByUserId(fromEmailRequest);
-                if (fromEmailResponse.getFound()) {
-                    fromUserEmail = fromEmailResponse.getEmail();
-                }
+                fromUserEmail = GrpcUtil.getEmailByUserId(userServiceStub, fromUserId);
             } catch (Exception e) {
                 System.err.println("Failed to retrieve email for userId: " + fromUserId);
             }

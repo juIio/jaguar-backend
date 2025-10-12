@@ -3,6 +3,7 @@ package cc.jagind.transaction.controller;
 import cc.jagind.commons.utils.JwtUtil;
 import cc.jagind.grpc.UserProto;
 import cc.jagind.grpc.UserServiceGrpc;
+import cc.jagind.grpc.util.GrpcUtil;
 import cc.jagind.transaction.dto.TransactionDto;
 import cc.jagind.transaction.model.Transaction;
 import cc.jagind.transaction.service.TransactionService;
@@ -50,25 +51,13 @@ public class SendMoneyController {
             String toUserEmail = "";
 
             try {
-                UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
-                        .setUserId(transaction.getFromUserId())
-                        .build();
-                UserProto.EmailResponse emailResponse = userServiceStub.getEmailByUserId(emailRequest);
-                if (emailResponse.getFound()) {
-                    fromUserEmail = emailResponse.getEmail();
-                }
+                fromUserEmail = GrpcUtil.getEmailByUserId(userServiceStub, transaction.getFromUserId());
             } catch (Exception e) {
                 System.err.println("Failed to retrieve email for userId: " + transaction.getFromUserId());
             }
 
             try {
-                UserProto.UserIdRequest emailRequest = UserProto.UserIdRequest.newBuilder()
-                        .setUserId(transaction.getToUserId())
-                        .build();
-                UserProto.EmailResponse emailResponse = userServiceStub.getEmailByUserId(emailRequest);
-                if (emailResponse.getFound()) {
-                    toUserEmail = emailResponse.getEmail();
-                }
+                toUserEmail = GrpcUtil.getEmailByUserId(userServiceStub, transaction.getToUserId());
             } catch (Exception e) {
                 System.err.println("Failed to retrieve email for userId: " + transaction.getToUserId());
             }
