@@ -1,0 +1,5 @@
+### Delete transaction by ID
+DELETE http://localhost:8080/transactions/1
+
+### Delete all transactions
+DELETE http://localhost:8080/transactions/deleteAll

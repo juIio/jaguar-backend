@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_package = "cc.jagind.grpc";
+option java_outer_classname = "UserProto";
+
+service UserService {
+  rpc GetBalance(UserIdRequest) returns (BalanceResponse);
+  rpc DeductBalance(DeductRequest) returns (DeductResponse);
+  rpc AddBalance(AddRequest) returns (AddResponse);
+  rpc GetUserIdByEmail(EmailRequest) returns (UserIdResponse);
+  rpc GetEmailByUserId(UserIdRequest) returns (EmailResponse);
+}
+
+message UserIdRequest {
+  int64 userId = 1;
+}
+
+message BalanceResponse {
+  double balance = 1;
+}
+
+message DeductRequest {
+  int64 userId = 1;
+  double amount = 2;
+}
+
+message AddRequest {
+  int64 userId = 1;
+  double amount = 2;
+}
+
+message DeductResponse {
+  bool success = 1;
+}
+
+message AddResponse {
+  bool success = 1;
+}
+
+message EmailRequest {
+  string email = 1;
+}
+
+message UserIdResponse {
+  int64 userId = 1;
+  bool found = 2;
+}
+
+message EmailResponse {
+  string email = 1;
+  bool found = 2;
+}

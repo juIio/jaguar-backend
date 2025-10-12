@@ -2,17 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.5</version>
         <relativePath/>
     </parent>
+
     <groupId>cc.jagind</groupId>
     <artifactId>jaguar</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
     <name>jaguar</name>
     <description>The backend service for the JAGUAR banking application</description>
+
+    <modules>
+        <module>commons</module>
+        <module>transaction-service</module>
+        <module>user-service</module>
+        <module>grpc-contracts</module>
+    </modules>
+
     <properties>
         <java.version>17</java.version>
         <testcontainers.version>1.19.3</testcontainers.version>
@@ -37,7 +49,6 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-
 
         <!-- Lombok -->
         <dependency>
@@ -88,6 +99,27 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
+
+        <!-- gRPC Protobuf -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>1.66.0</version>
+        </dependency>
+
+        <!-- Protobuf Java -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.25.3</version>
+        </dependency>
+
+        <!-- Spring Boot Kafka Starter -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>3.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -104,6 +136,7 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -116,7 +149,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+            -->
         </plugins>
     </build>
-
 </project>

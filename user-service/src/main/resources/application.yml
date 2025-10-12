@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: "user-service"
+    version: "0.0.1-SNAPSHOT"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: ${POSTGRES_URL}user
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+server:
+  port: ${USER_SERVICE_PORT}
+
+grpc:
+  server:
+    port: ${USER_SERVICE_GRPC_PORT:9090}
+  transaction:
+    service:
+      host: ${TRANSACTION_SERVICE_HOST:localhost}
+      port: ${TRANSACTION_SERVICE_GRPC_PORT:9091}
+
+jwt:
+  secret: ${JWT_SECRET}
+
+frontend:
+  url: ${FRONTEND_URL}

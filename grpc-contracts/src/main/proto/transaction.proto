@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+option java_package = "cc.jagind.grpc";
+option java_outer_classname = "TransactionProto";
+
+service TransactionService {
+  rpc CreateTransaction(CreateTransactionRequest) returns (CreateTransactionResponse);
+  rpc GetTransaction(GetTransactionRequest) returns (GetTransactionResponse);
+  rpc GetAllTransactions(GetAllTransactionsRequest) returns (GetAllTransactionsResponse);
+  rpc GetTransactionsByUser(GetTransactionsByUserRequest) returns (GetTransactionsByUserResponse);
+  rpc GetRecentTransactions(GetRecentTransactionsRequest) returns (GetRecentTransactionsResponse);
+  rpc GetTransactionsByAmountRange(GetTransactionsByAmountRangeRequest) returns (GetTransactionsByAmountRangeResponse);
+  rpc DeleteTransaction(DeleteTransactionRequest) returns (DeleteTransactionResponse);
+}
+
+message Transaction {
+  int64 id = 1;
+  int64 timestamp = 2;
+  double amount = 3;
+  string description = 4;
+  int64 fromUserId = 5;
+  int64 toUserId = 6;
+  TransactionResult result = 7;
+}
+
+enum TransactionResult {
+  APPROVED = 0;
+  DECLINED = 1;
+}
+
+message CreateTransactionRequest {
+  int64 fromUserId = 1;
+  int64 toUserId = 2;
+  double amount = 3;
+  string description = 4;
+}
+
+message CreateTransactionResponse {
+  bool success = 1;
+  string message = 2;
+  Transaction transaction = 3;
+}
+
+message GetTransactionRequest {
+  int64 id = 1;
+}
+
+message GetTransactionResponse {
+  bool success = 1;
+  string message = 2;
+  Transaction transaction = 3;
+}
+
+message GetAllTransactionsRequest {
+}
+
+message GetAllTransactionsResponse {
+  bool success = 1;
+  string message = 2;
+  repeated Transaction transactions = 3;
+}
+
+message GetTransactionsByUserRequest {
+  int64 userId = 1;
+}
+
+message GetTransactionsByUserResponse {
+  bool success = 1;
+  string message = 2;
+  repeated Transaction transactions = 3;
+}
+
+message GetRecentTransactionsRequest {
+  int32 limit = 1;
+}
+
+message GetRecentTransactionsResponse {
+  bool success = 1;
+  string message = 2;
+  repeated Transaction transactions = 3;
+}
+
+message GetTransactionsByAmountRangeRequest {
+  double minAmount = 1;
+  double maxAmount = 2;
+}
+
+message GetTransactionsByAmountRangeResponse {
+  bool success = 1;
+  string message = 2;
+  repeated Transaction transactions = 3;
+}
+
+message DeleteTransactionRequest {
+  int64 id = 1;
+}
+
+message DeleteTransactionResponse {
+  bool success = 1;
+  string message = 2;
+}
