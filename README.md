@@ -8,6 +8,15 @@ This is the backend source for the **JAGUAR** banking application, built with Sp
 
 JAGUAR is a modern banking application that provides users with essential banking features including account registration, secure authentication, money transfers, and transaction history management. The backend is built using Spring Boot with a PostgreSQL database and JWT-based authentication.
 
+
+## Architecture
+
+JAGUAR is built using a **microservices architecture**, enabling scalability, maintainability, and independent deployment of services. The system leverages:
+
+- **gRPC** for synchronous inter-service communication, providing high performance, type safe communication.
+- **Apache Kafka** for asynchronous message processing and event driven operations.
+
+
 ## Features
 
 ### 🔐 Authentication & Security
@@ -37,9 +46,11 @@ JAGUAR is a modern banking application that provides users with essential bankin
 
 - **Framework**: Spring Boot 3.5.5
 - **Language**: Java 17
+- **Architecture**: Microservices
 - **Database**: PostgreSQL
 - **ORM**: Spring Data JPA with Hibernate
-- **Authentication**: SON Web Tokens
+- **Authentication**: JSON Web Tokens (JWT)
+- **Inter Service Communication**: gRPC (synchronous), Apache Kafka (asynchronous)
 - **Build Tool**: Maven
 
 
