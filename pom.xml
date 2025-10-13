@@ -23,6 +23,7 @@
         <module>transaction-service</module>
         <module>user-service</module>
         <module>grpc-contracts</module>
+        <module>notification-service</module>
     </modules>
 
     <properties>
