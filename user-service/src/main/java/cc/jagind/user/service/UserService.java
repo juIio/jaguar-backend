@@ -19,6 +19,10 @@ public class UserService {
         this.passwordUtil = passwordUtil;
     }
 
+    public User getUserByVerificationCode(String verificationCode) {
+        return this.userRepository.findByVerificationCode(verificationCode).orElse(null);
+    }
+
     public User getUserById(long id) {
         return this.userRepository.findById(id).orElse(null);
     }

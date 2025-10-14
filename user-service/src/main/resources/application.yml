@@ -12,6 +12,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
 server:
   port: ${USER_SERVICE_PORT}
@@ -29,3 +31,7 @@ jwt:
 
 frontend:
   url: ${FRONTEND_URL}
+
+kafka:
+  topic:
+    user-registered: user-registered

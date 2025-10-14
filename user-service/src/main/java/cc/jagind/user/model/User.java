@@ -32,4 +32,7 @@ public class User {
     @Column(name = "verified_at")
     private long verifiedAt;
 
+    @Column(name = "verification_code")
+    private String verificationCode;
+
 }
