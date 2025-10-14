@@ -7,11 +7,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserRegisteredEventListener {
+public class UserRegisteredListener {
 
     private final HtmlEmailService emailService;
 
-    public UserRegisteredEventListener(HtmlEmailService emailService) {
+    public UserRegisteredListener(HtmlEmailService emailService) {
         this.emailService = emailService;
     }
 
@@ -22,7 +22,7 @@ public class UserRegisteredEventListener {
         String code = event.getVerificationCode();
 
         try {
-            // TODO: Replace with dynamic link so it's not hard-coded
+            // TODO: Replace with dynamic link so it's not hard-coded (just needs to point to user-service api)
             String verificationLink = "https://localhost:8081/api/user/verify?code=" + code + "&email=" + email;
             emailService.sendVerificationEmail(email, fullName, verificationLink);
 
